@@ -108,10 +108,23 @@ TrackId
   group by InvoiceId, TrackId
 
 -- 13. `line_item_track_artist.sql`: Provide a query that includes the purchased track name AND artist name with each invoice line item.
-
+SELECT il.InvoiceLineId, t.[Name] as 'Track Name', art.[Name] as 'Artist Name'
+FROM InvoiceLine il
+INNER JOIN Track t ON il.TrackId = t.TrackId
+INNER JOIN Album alb ON alb.AlbumId = t.AlbumId
+INNER JOIN Artist art ON art.ArtistId = alb.ArtistId
 
 -- 14. `country_invoices.sql`: Provide a query that shows the # of invoices per country. HINT: [GROUP BY](https://docs.microsoft.com/en-us/sql/t-sql/queries/select-group-by-transact-sql)
+
+SELECT TOP(1000)
+	count(InvoiceId) as Invoices, 
+	BillingCountry
+FROM Invoice
+Group By BillingCountry 
+
 -- 15. `playlists_track_count.sql`: Provide a query that shows the total number of tracks in each playlist. The Playlist name should be include on the resulant table.
+
+
 -- 16. `tracks_no_id.sql`: Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
 -- 17. `invoices_line_item_count.sql`: Provide a query that shows all Invoices but includes the # of invoice line items.
 -- 18. `sales_agent_total_sales.sql`: Provide a query that shows total sales made by each sales agent.
