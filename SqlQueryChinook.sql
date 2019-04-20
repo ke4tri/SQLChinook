@@ -123,6 +123,10 @@ FROM Invoice
 Group By BillingCountry 
 
 -- 15. `playlists_track_count.sql`: Provide a query that shows the total number of tracks in each playlist. The Playlist name should be include on the resulant table.
+--SELECT *
+-- need to aggregate
+
+
 
 
 -- 16. `tracks_no_id.sql`: Provide a query that shows all the Tracks, but displays no IDs. The result should include the Album name, Media type and Genre.
@@ -134,6 +138,18 @@ Group By BillingCountry
 -- 22. `sales_per_country.sql`: Provide a query that shows the total sales per country.
 -- 23. `top_country.sql`: Which country's customers spent the most?
 -- 24. `top_2013_track.sql`: Provide a query that shows the most purchased track of 2013.
+SELECT count()
+from Track t 
+    join InvoiceLine il 
+      on il.TrackId = t.TrackId
+    join Invoice i 
+      on i.InvoiceId = il.InvoiceId 
+
+where DatePart(Year.i.InvoiceDate) = 2013 
+--where i.InvoiceDate > '1/1/2013' and i.InvoiceDate < '1/1/20144'
+--where YEAR(i.invoicedate) = 2013
+group by t.TrackId, t.Name
+order by count(*) desc
 -- 25. `top_5_tracks.sql`: Provide a query that shows the top 5 most purchased songs.
 -- 26. `top_3_artists.sql`: Provide a query that shows the top 3 best selling artists.
 -- 27. `top_media_type.sql`: Provide a query that shows the most purchased Media Type.
